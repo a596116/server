@@ -4,11 +4,22 @@ export default class HomeController extends Controller {
   public async index() {
     try {
       const userList = await this.ctx.service.user.getUserList()
-      this.ctx.body = userList
+      if (userList) {
+        this.ctx.body = {
+          code: 20000,
+          data: userList
+        }
+      }
+      else {
+        this.ctx.body = {
+          code: 40000,
+          message: '獲取用戶列表失敗'
+        }
+      }
     } catch (error) {
       this.ctx.body = {
         code: 40000,
-        message: '獲取失敗'
+        message: '獲取用戶列表失敗'
       }
     }
   }
@@ -67,7 +78,17 @@ export default class HomeController extends Controller {
     try {
       const id = this.ctx.params.id
       const user = await this.ctx.service.user.getUser(id)
-      this.ctx.body = user
+      if (user) {
+        this.ctx.body = {
+          code: 20000,
+          data: user
+        }
+      } else {
+        this.ctx.body = {
+          code: 40000,
+          message: '獲取用戶資訊失敗'
+        }
+      }
     } catch (error) {
       this.ctx.body = {
         code: 40000,

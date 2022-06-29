@@ -10,27 +10,28 @@ export default class UserService extends Service {
       return false
     }
   }
-  // 獲取所有用戶
-  async getDataList(table: string) {
+  // 獲取所有Data
+  async getDataList(table: string, page: number, order: string, search: string, permission: string, active: string) {
     const tableName = table[0].toUpperCase() + table.slice(1) //將table字首轉換為大寫
     try {
-      return await this.app.model[tableName].findAll()
+      return await this.app.model[tableName].findAndCountAll({
+        order: [['id', order]], // 排序 ASC 正序 DESC 逆序
+        where: {
+          name: { $like: `%${search}%` },
+          permissions: {
+            p: { $like: `%${permission}%` }
+          },
+          active: { $like: `%${active}%` },
+        },
+        limit: 3, //一頁有3筆資料
+        offset: 3 * (page - 1) //第幾頁
+      })
     } catch (error) {
       return false
     }
   }
 
-  // 獲取用戶資訊
-  async userInfo(token: string) {
-    const userAccount = this.ctx.app.jwt.verify(token, this.ctx.app.config.jwt.secret)
-    try {
-      return await this.app.model.User.findOne({ where: { account: userAccount } })
-    } catch (error) {
-      return false
-    }
-  }
-
-  // 更新用戶
+  // 更新Data
   async updateData(table: string, id: number, obj: object) {
     try {
       const tableName = table[0].toUpperCase() + table.slice(1) //將table字首轉換為大寫
@@ -76,11 +77,15 @@ export default class UserService extends Service {
   }
 
   // 獲取用戶資訊
-  async getUser(id: string) {
+  async getData(table, id: number) {
+    const tableName = table[0].toUpperCase() + table.slice(1) //將table字首轉換為大寫
     try {
-      return await this.app.model.User.findOne({ where: { id: id } })
+      return await this.app.model[tableName].findOne({ where: { id: id } })
     } catch (error) {
       return false
     }
+  }
+  async test() {
+    return await this.app.model.Test.findAll()
   }
 }

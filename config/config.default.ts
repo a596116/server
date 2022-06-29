@@ -1,6 +1,8 @@
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg'
 import path from 'path'
 
+const Op = require('sequelize').Op
+
 export default (appInfo: EggAppInfo) => {
   const config = {} as PowerPartial<EggAppConfig>
 
@@ -10,6 +12,11 @@ export default (appInfo: EggAppInfo) => {
 
   // add your egg config in here
   config.middleware = []
+
+  //设置上传文件
+  config.multipart = {
+    fileSize: 300 * 1000 * 1000, //设置上传限制为300M
+  }
 
   // json web token
   config.jwt = {
@@ -37,8 +44,8 @@ export default (appInfo: EggAppInfo) => {
   config.sequelize = {
     dialect: 'mysql',
     host: '103.61.139.237',
-    port: '3308',
-    user: 'haodai',
+    port: 3308,
+    username: 'haodai',
     password: '123456',
     database: 'server',
     timezone: '+08:00',
@@ -54,7 +61,43 @@ export default (appInfo: EggAppInfo) => {
     dialectOptions: {
       dateStrings: true,
       typeCast: true
-    }
+    },
+    operatorsAliases: {
+      $eq: Op.eq,
+      $ne: Op.ne,
+      $gte: Op.gte,
+      $gt: Op.gt,
+      $lte: Op.lte,
+      $lt: Op.lt,
+      $not: Op.not,
+      $in: Op.in,
+      $notIn: Op.notIn,
+      $is: Op.is,
+      $like: Op.like,
+      $notLike: Op.notLike,
+      $iLike: Op.iLike,
+      $notILike: Op.notILike,
+      $regexp: Op.regexp,
+      $notRegexp: Op.notRegexp,
+      $iRegexp: Op.iRegexp,
+      $notIRegexp: Op.notIRegexp,
+      $between: Op.between,
+      $notBetween: Op.notBetween,
+      $overlap: Op.overlap,
+      $contains: Op.contains,
+      $contained: Op.contained,
+      $adjacent: Op.adjacent,
+      $strictLeft: Op.strictLeft,
+      $strictRight: Op.strictRight,
+      $noExtendRight: Op.noExtendRight,
+      $noExtendLeft: Op.noExtendLeft,
+      $and: Op.and,
+      $or: Op.or,
+      $any: Op.any,
+      $all: Op.all,
+      $values: Op.values,
+      $col: Op.col
+    },
   }
 
   config.static = {

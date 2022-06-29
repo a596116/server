@@ -1,7 +1,7 @@
 import { Application } from 'egg'
 
 export default (app: Application) => {
-    const { STRING, BOOLEAN } = app.Sequelize
+    const { STRING, JSON } = app.Sequelize
     const User = app.model.define('user', {
         // id: {
         //     type: UUID,
@@ -31,7 +31,7 @@ export default (app: Application) => {
             comment: '認證碼'
         },
         active: {
-            type: BOOLEAN,
+            type: STRING(5),
             comment: '活躍狀態'
         },
         avatar: {
@@ -39,7 +39,7 @@ export default (app: Application) => {
             comment: '頭像'
         },
         permissions: {
-            type: STRING(36),
+            type: JSON,
             comment: '權限'
         },
     })
