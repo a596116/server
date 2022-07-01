@@ -43,9 +43,13 @@ export default (appInfo: EggAppInfo) => {
   // sql
   config.sequelize = {
     dialect: 'mysql',
-    host: '103.61.139.237',
-    port: 3308,
-    username: 'haodai',
+    // 開發
+    host: '127.0.0.1',
+    port: 3306,
+    username: 'root',
+    // 上線
+    // port: 3308,
+    // username: 'haodai',
     password: '123456',
     database: 'server',
     timezone: '+08:00',

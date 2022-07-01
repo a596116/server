@@ -35,7 +35,7 @@ export default (app: Application) => {
             comment: '活躍狀態'
         },
         avatar: {
-            type: STRING(36),
+            type: STRING(100),
             comment: '頭像'
         },
         permissions: {

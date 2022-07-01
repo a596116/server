@@ -14,11 +14,12 @@ export default class UploadController extends Controller {
         await pump(stream, writeStream)
         this.ctx.body = {
             code: 20000,
+            errno: 0,
             data: {
                 name: filename,
                 // file: `/uploads/${folder}/${filename}` //正式地址
-                file: `http://103.61.139.237:7001/uploads/${folder}/${filename}`  //临时服务器地址
-                // file: `http://127.0.0.1:7001/uploads/${folder}/${filename}`  //临时服务器地址
+                // file: `http://103.61.139.237:7001/uploads/${folder}/${filename}`  //临时服务器地址
+                url: `http://127.0.0.1:7001/uploads/${folder}/${filename}`  //临时服务器地址
             }
         }
     }

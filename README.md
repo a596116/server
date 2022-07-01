@@ -1,33 +1,33 @@
-# hackernews-async-ts
+# 浩呆後端
 
-[Hacker News](https://news.ycombinator.com/) showcase using typescript && egg
+## 啓動項目
 
-## QuickStart
+启动项目之前，先按下面第四节的内容，在mysql数据库中创建xiaozhoucms数据库。
+啟動項目前，先在mysql數據庫中創建server數據庫
+相關設定在/app/config/config.default.ts中可以設定
 
-### Development
+安裝依賴包
 
-```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
+```
+//npm
+npm install
+
+//yarn 
+yarn 
+
+//pnpm
+pnpm install
+```
+運行項目
+
+```
+//npm
+npm run dev
+
+//yarn 
+yarn dev 
+
+//pnpm
+pnpm dev
 ```
 
-Don't tsc compile at development mode, if you had run `tsc` then you need to `npm run clean` before `npm run dev`.
-
-### Deploy
-
-```bash
-$ npm run tsc
-$ npm start
-```
-
-### Npm Scripts
-
-- Use `npm run lint` to check code style
-- Use `npm test` to run unit test
-- se `npm run clean` to clean compiled js at development mode once
-
-### Requirement
-
-- Node.js 8.x
-- Typescript 2.8+

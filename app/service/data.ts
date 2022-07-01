@@ -1,10 +1,11 @@
 import { Service } from 'egg'
 
-export default class UserService extends Service {
-  // 新增帳號
-  public async createUser(user: string) {
+export default class DataService extends Service {
+  // 新增資料
+  public async createData(table: string, data: object) {
+    const tableName = table[0].toUpperCase() + table.slice(1) //將table字首轉換為大寫
     try {
-      await this.app.model.User.create(user)
+      await this.app.model[tableName].create(data)
       return true
     } catch (error) {
       return false
@@ -43,10 +44,11 @@ export default class UserService extends Service {
     }
   }
 
-  // 刪除用戶
-  async deleteUser(id: number) {
+  // 刪除資料
+  async deleteData(table: string, id: number) {
+    const tableName = table[0].toUpperCase() + table.slice(1) //將table字首轉換為大寫
     try {
-      await this.app.model.User.destroy({
+      await this.app.model[tableName].destroy({
         where: {
           id
         }
@@ -57,27 +59,9 @@ export default class UserService extends Service {
     }
   }
 
-  // 登入
-  async login(account: string, password: string) {
-    try {
-      const user = await this.app.model.User.findOne({ where: { account } })
-      if (user) {
-        let usr = user.dataValues
-        if (password == usr.password && account == usr.account) {
-          return this.app.jwt.sign(account, this.app.config.jwt.secret)
-        } else {
-          return false
-        }
-      } else {
-        return false
-      }
-    } catch (error) {
-      return false
-    }
-  }
 
-  // 獲取用戶資訊
-  async getData(table, id: number) {
+  // 獲取單筆資料
+  async getData(table: string, id: number) {
     const tableName = table[0].toUpperCase() + table.slice(1) //將table字首轉換為大寫
     try {
       return await this.app.model[tableName].findOne({ where: { id: id } })
